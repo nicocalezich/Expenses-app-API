@@ -38,21 +38,9 @@ const sumTotalAmount = async (income) => {
     return total
 }
 
-// const getMonthInfo = (month) => {
-//     switch (month) {
-//         case 1: return { days: 31, month: "Enero" }
-//         case 2: return { days: 28, month: "Febrero" }
-//         case 3: return { days: 31, month: "Marzo" }
-//         case 4: return { days: 30, month: "Abril" }
-//         case 5: return { days: 31, month: "Mayo" }
-//         case 6: return { days: 30, month: "Junio" }
-//         case 7: return { days: 31, month: "Julio" }
-//         case 8: return { days: 31, month: "Agosto" }
-//         case 9: return { days: 30, month: "Septiembre" }
-//         case 10: return { days: 31, month: "Octubre" }
-//         case 11: return { days: 30, month: "Noviembre" }
-//         case 12: return { days: 31, month: "Diciembre" }
-//     }
-// }
+const deleteIncome = async (name, date) => {
+    const result = await incomeModel.deleteOne({ "name" : name, "date": date})
+    return result
+}
 
-module.exports = { createIncome, getAllIncome, getTotalIncomePerMonth }
+module.exports = { createIncome, getAllIncome, getTotalIncomePerMonth, deleteIncome }

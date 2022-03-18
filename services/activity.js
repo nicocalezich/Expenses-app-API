@@ -1,4 +1,5 @@
 const activityModel = require("../schemas/activity")
+const ObjectId = require("mongoose").Types.ObjectId
 
 const createActivityItem = (item) => {
     return activityModel.create(item)
@@ -29,4 +30,9 @@ const getMonthBalance = async (month, year) => {
     return {balance}
 }
 
-module.exports = { createActivityItem, getActivityItem, getMonthBalance }
+const deleteById = async (id) => {
+    const result = await activityModel.deleteOne({ "_id" : ObjectId(id)})
+    return result
+}
+
+module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteById }

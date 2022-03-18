@@ -1,4 +1,6 @@
 const service = require('../services/activity')
+const expenseService = require('../services/expenses')
+const incomeService = require('../services/income')
 
 const createActivityItem = async (req, res) => {
     try{
@@ -33,5 +35,21 @@ const getMonthBalance = async (req, res) => {
     }
 }
 
-module.exports = { createActivityItem, getActivityItem, getMonthBalance }
+const deleteActivity = async (req, res) => {
+    try {   
+        const result = await service.deleteById(req.params.id)
+        if (req.params.isExpense){
+            await expenseService.deleteExpense(req.params.name, req.params.date) 
+        }
+        else{
+            await incomeService.deleteIncome(req.params.name, req.params.date)
+        }
+        res.send(result).status(200)
+    } catch (error) {
+        console.log(error)
+        res.send(error).status(500)
+    }
+}
+
+module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteActivity }
 

@@ -82,4 +82,9 @@ const getMonthInfo = (month) => {
     }
 }
 
-module.exports = { createExpense, getExpenses, getExpensesPerYear, getExpensesPerMonth, getTotalAmountPerMonth }
+const deleteExpense = async (name, date) => {
+    const result = await expenseModel.deleteOne({ "name" : name, "date": date})
+    return result
+}
+
+module.exports = { createExpense, getExpenses, getExpensesPerYear, getExpensesPerMonth, getTotalAmountPerMonth, deleteExpense }
