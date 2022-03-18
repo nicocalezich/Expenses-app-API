@@ -1,5 +1,7 @@
 const activityModel = require("../schemas/activity")
 const ObjectId = require("mongoose").Types.ObjectId
+const expenseModel = require('../schemas/expense')
+const incomeService = require('../services/income')
 
 const createActivityItem = (item) => {
     return activityModel.create(item)
@@ -35,4 +37,13 @@ const deleteById = async (id) => {
     return result
 }
 
-module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteById }
+const updateById = async (id, name, amount, date, isExpense) => {
+    const previusActivity = await activityModel.findOne({ _id: id })
+    const result = await activityModel.updateOne({ _id: id }, { $set: { name, amount, date, isExpense } })
+    if (isExpense){
+       await expenseModel.updateOne({ name: previusActivity.name, amount: previusActivity.amount }, { $set: { name, amount, date } })
+    }
+    return result
+}
+
+module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteById, updateById }

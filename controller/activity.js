@@ -51,5 +51,19 @@ const deleteActivity = async (req, res) => {
     }
 }
 
-module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteActivity }
+const updateById = async (req, res) => {
+    try {
+        const id = req.body.id
+        const name = req.body.name
+        const amount = req.body.amount
+        const date = req.body.date
+        const isExpense = req.body.isExpense
+        const result = await service.updateById(id, name, amount, date, isExpense)
+        res.send(result)
+    } catch (error) {
+        res.send(error).status(500)
+    }
+}
+
+module.exports = { createActivityItem, getActivityItem, getMonthBalance, deleteActivity, updateById }
 
