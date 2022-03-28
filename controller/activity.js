@@ -36,9 +36,10 @@ const getMonthBalance = async (req, res) => {
 }
 
 const deleteActivity = async (req, res) => {
-    try {   
+    try {
+
         const result = await service.deleteById(req.params.id)
-        if (req.params.isExpense){
+        if (req.params.isExpense == "true"){
             await expenseService.deleteExpense(req.params.name, req.params.date) 
         }
         else{

@@ -1,7 +1,7 @@
 const activityModel = require("../schemas/activity")
 const ObjectId = require("mongoose").Types.ObjectId
 const expenseModel = require('../schemas/expense')
-const incomeService = require('../services/income')
+const incomeModel = require("../schemas/income")
 
 const createActivityItem = (item) => {
     return activityModel.create(item)
@@ -42,6 +42,9 @@ const updateById = async (id, name, amount, date, isExpense) => {
     const result = await activityModel.updateOne({ _id: id }, { $set: { name, amount, date, isExpense } })
     if (isExpense){
        await expenseModel.updateOne({ name: previusActivity.name, amount: previusActivity.amount }, { $set: { name, amount, date } })
+    }
+    else{
+       await incomeModel.updateOne({ name: previusActivity.name, amount: previusActivity.amount }, { $set: { name, amount, date } })
     }
     return result
 }
